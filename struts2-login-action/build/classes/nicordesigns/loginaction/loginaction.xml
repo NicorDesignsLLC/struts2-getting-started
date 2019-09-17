@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+ 	<!-- This package contains the non-secure portions of the Struts 2 Portfolio. 
+		This allows these public actions to share inheritance of things specialized 
+		to the non-secure portions of the application. -->
+
+	<package name="nicordesignsPublic"
+		namespace="/nicordesigns" extends="struts-default">
+
+        <action name="PortfolioHomePage">
+			<result>/nicordesigns.loginaction/PortfolioHomePage.jsp</result>
+		</action>
+
+		<action name="LoginForm">
+			<result>/nicordesigns.loginaction/Login.jsp</result>
+		</action>
+
+		<action name="Login" class="nicordesigns.loginaction.Login">
+			<result type="redirect">
+				/nicordesigns.loginaction/secure/InsuranceAdmin.action
+			</result>
+			<result name="input">/nicordesigns.loginaction/Login.jsp</result>
+		</action>
+
+	</package>
+
+
+	<!-- This package contains the secure portions of the Struts 2 Portfolio. 
+		This allows these secure actions to share inheritance of things specialized 
+		to the secure portions of the application. -->
+	<package name="nicordesignsSecure"
+		namespace="/nicordesigns.loginaction/secure" extends="struts-default">
+
+		<!-- We need to define the authentication interceptor and configure a new 
+			stack, based upon the builtin default stack. We will simply add our authentication 
+			stack to the top of the default stack and make it the default intercptor 
+			reference for the actions in this package. -->
+		<interceptors>
+
+			<interceptor name="authenticationInterceptor"
+				class="nicordesigns.loginaction.utils.AuthenticationInterceptor" />
+
+			<interceptor-stack name="secureStack">
+				<interceptor-ref name="authenticationInterceptor" />
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+
+		</interceptors>
+
+		<default-interceptor-ref name="secureStack" />
+
+		<global-results>
+			<result name="login" type="redirect">
+				/nicordesigns.loginaction/LoginForm.action
+			</result>
+			<result name="error">/nicordesigns.loginaction/Error.jsp</result>
+		</global-results>
+
+		<global-exception-mappings>
+			<exception-mapping exception="java.lang.Exception"
+				result="error" />
+		</global-exception-mappings>
+
+		<action name="InsuranceAdmin">
+			<result>/nicordesigns.loginaction/InsuranceAdmin.jsp</result>
+		</action>
+
+    
+	</package>
+
+</struts>
