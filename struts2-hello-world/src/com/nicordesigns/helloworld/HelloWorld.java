@@ -1,4 +1,4 @@
-package nicordesigns.helloworld;
+package com.nicordesigns.helloworld;
 
 /* 
  * Hello World Action for chapter one.  This Action expects to receive a 

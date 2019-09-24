@@ -3,13 +3,12 @@
 <html>
 
 <head>
-<title>Name Collector</title>
+<title>Name Entry</title>
 </head>
 
 <body>
 	<hr>
-	<h4>Enter your name so that we can customize a greeting just for
-		you!</h4>
+	<h4>Please enter your name</h4>
 	<s:form action="HelloWorld">
 		<s:textfield name="name" label="Your name" />
 		<s:submit />
